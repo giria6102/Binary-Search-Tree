@@ -1,0 +1,124 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+class Node{
+ public:
+ int data;
+ Node*left;
+ Node*right;
+ 
+ Node(int data){
+     this->data=data;
+     this->left=left;
+     this->right=right;
+ }
+};
+void levelorderTraversal(Node*root){
+    queue<Node*>q;
+    q.push(root);
+    q.push(NULL);  //separator
+     while(!q.empty()){
+         Node*temp=q.front();
+         q.pop();
+         if(temp==NULL){
+             cout<<endl;
+             if(!q.empty()){
+             q.push(NULL);
+         }
+         }
+         else{
+             cout<<temp->data<<" ";
+             if(temp->left){
+                 q.push(temp->left);
+             }
+             if(temp->right){
+                 q.push(temp->right);
+             }
+         }
+         
+     }
+}
+void inorder(Node*root){
+    //base case
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left);
+    cout<<root->data<<" ";
+    inorder(root->right);
+}
+void preorder(Node*root){
+    //base case
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+Node*createBST(Node*&root,int data){
+    if(root==NULL){
+        root=new Node(data);
+        return root;
+    }
+    if(data<root->data){
+        root->left=createBST(root->left,data);
+    }
+    else{
+       root->right=createBST(root->right,data); 
+    }
+    return root;
+}
+void inputdataforBST(Node*&root){
+    int data;
+    cin>>data;
+    
+    while(data!=-1){
+        
+        createBST(root,data);
+        cin>>data;
+    }
+}
+
+Node*minvalue(Node*root){
+    Node*temp=root;
+    while(temp->left!=NULL){
+        temp=temp->left;
+    }
+    return temp;
+}
+
+int main() {
+    
+    Node*root=NULL;
+    
+    cout<<"Enter the value of data to be entered"<<endl;
+    inputdataforBST(root);
+    cout<<"printing BSt"<<endl;
+    levelorderTraversal(root);
+    cout<<"inorder "<<endl;
+    inorder(root);
+    cout<<endl;
+     cout<<"preorder"<<endl;
+     preorder(root);
+     cout<<endl;
+     cout<<"minvalue :"<<minvalue(root)->data<<endl;
+   
+    
+
+    return 0;
+}
+solution:
+Enter the value of data to be entered
+50 20 70 10 30 90 110 -1
+printing BSt
+50 
+20 70 
+10 30 90 
+110 
+inorder 
+10 20 30 50 70 90 110 
+preorder
+50 20 10 30 70 90 110 
+minvalue 10
