@@ -88,6 +88,49 @@ Node*minvalue(Node*root){
     }
     return temp;
 }
+Node*deletenode(Node*root,int val){
+   
+    if(root==NULL){
+        return root;
+        
+    }
+    if(root->data==val){
+        // o child
+        if(root->left==NULL&&root->right==NULL){
+        delete root;
+        return NULL;
+        }
+        //  1 child
+        else if(root->left!=NULL&&root->right==NULL){
+            Node *temp=root->left;
+            delete root;
+            return temp;
+        }
+        else if(root->left==NULL&&root->right!=NULL){
+            Node *temp=root->right;
+            delete root;
+            return temp;
+        }
+        // 2 child
+        else if(root->left!=NULL&&root->right!=NULL){
+            int mini=minvalue(root->right)->data;
+            root->data=mini;
+            root->right=deletenode(root->right,mini);
+            return root;
+            
+        }
+        
+    }
+    else if(root->data<val){
+        root->right=deletenode(root->right,val);
+        return root;
+    }
+    else{
+        root->left=deletenode(root->left,val);
+        return root;
+    }
+}
+
 
 int main() {
     
@@ -97,6 +140,7 @@ int main() {
     inputdataforBST(root);
     cout<<"printing BSt"<<endl;
     levelorderTraversal(root);
+    
     cout<<"inorder "<<endl;
     inorder(root);
     cout<<endl;
@@ -104,6 +148,20 @@ int main() {
      preorder(root);
      cout<<endl;
      cout<<"minvalue :"<<minvalue(root)->data<<endl;
+     
+     root=deletenode(root,30); // deletion
+     
+    cout<<"printing BSt"<<endl;
+    levelorderTraversal(root);
+    
+    cout<<"inorder "<<endl;
+    inorder(root);
+    cout<<endl;
+     cout<<"preorder"<<endl;
+     preorder(root);
+     cout<<endl;
+     cout<<"minvalue :"<<minvalue(root)->data<<endl;
+   
    
     
 
@@ -121,4 +179,14 @@ inorder
 10 20 30 50 70 90 110 
 preorder
 50 20 10 30 70 90 110 
-minvalue 10
+minvalue :10
+printing BSt
+50 
+20 70 
+10 90 
+110 
+inorder 
+10 20 50 70 90 110 
+preorder
+50 20 10 70 90 110 
+minvalue :10
