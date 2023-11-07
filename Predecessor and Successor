@@ -1,0 +1,43 @@
+pair<int, int> predecessorSuccessor(TreeNode *root, int key)
+
+{
+
+    TreeNode * tmp = root;
+
+    int pre = -1,suc = -1;
+
+    while(tmp!=NULL&& tmp->data != key) {
+
+        if(tmp->data > key) {
+
+            suc = tmp->data; 
+
+            tmp = tmp->left;
+
+        }
+
+        else {
+
+            pre = tmp->data;
+
+            tmp = tmp->right;
+
+        }
+
+    }
+ if(tmp!=NULL){
+   TreeNode*leftree=tmp->left;
+   
+     while(leftree!=NULL&&tmp){
+         pre=leftree->data;
+         leftree=leftree->right;
+     }
+     
+     TreeNode*righttree=tmp->right;
+     while (righttree != NULL && tmp) {
+         suc = righttree->data;
+         righttree = righttree->left;
+     }
+ }
+    return {pre,suc};
+}
