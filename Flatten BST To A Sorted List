@@ -1,0 +1,28 @@
+void inorder(TreeNode<int>* root,vector<int>&ans){  // T(c)=O(n),S(c)=O(n)
+    if(root==NULL){
+        return;
+    }
+    //inorder=LNR
+      inorder(root->left,ans);
+      ans.push_back(root->data);
+      inorder(root->right,ans);
+}
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    vector<int>ans;
+    inorder(root,ans);
+   TreeNode<int>* newnode=new TreeNode<int>(ans[0]);
+    TreeNode<int>*curr=newnode;
+    int n=ans.size();
+    for(int i=1;i<n;i++){
+         TreeNode<int>* temp=new TreeNode<int>(ans[i]);
+         
+         curr->left=NULL;
+         curr->right=temp;
+         curr=temp;
+         
+    }
+    curr->left=NULL;
+    curr->right=NULL;
+    return newnode;
+}
