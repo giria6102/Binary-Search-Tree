@@ -1,4 +1,24 @@
-BinaryTreeNode<int>*solve(vector<int> &preorder,int mini,int maxi,int&i){     // T(c)=O(n)
+Approach 1:T(c)=O(nlogn)
+BinaryTreeNode<int>*inordertoBST(int s,int e,vector<int>&preorder){
+    if(s>e){
+        return NULL;
+    }
+    int mid=(s+e)/2;
+   BinaryTreeNode<int>*root=new BinaryTreeNode<int>( preorder[mid]);
+    root->left=inordertoBST(s,mid-1,preorder);
+    root->right=inordertoBST(mid+1,e,preorder);
+    
+    return root;
+
+}
+
+BinaryTreeNode<int>* preorderToBST(vector<int> &preorder) {
+    sort(preorder.begin(),preorder.end());
+    return inordertoBST(0,preorder.size()-1,preorder);
+
+}
+Approach 1:T(c)=O(n)
+BinaryTreeNode<int>*solve(vector<int> &preorder,int mini,int maxi,int&i){     
     if(i>=preorder.size()){
         return NULL;
     }
