@@ -1,3 +1,51 @@
+Approach:1 S(c)=O(n+m)
+void inorder(TreeNode *root,vector<int>&ans){
+    if(root==NULL){
+        return;
+    }
+    inorder(root->left,ans);
+    ans.push_back(root->data);
+    inorder(root->right,ans);
+}
+vector<int>merged(vector<int>&a,vector<int>&b){
+
+    int i=0;
+    int j=0;
+    int k=0;
+    int n=a.size();
+    int m=b.size();
+    vector<int>ans(n+m);
+
+    while(i<n && j<m){
+        if(a[i]<b[j]){
+          ans[k++]=a[i];
+          i++;
+        }
+        else{
+            ans[k++]=b[j];
+            j++;
+        }
+    }
+    while(i<n){
+        ans[k++]=a[i];
+        i++;
+    }
+    while(j<m){
+        ans[k++]=b[j];
+        j++;
+    }
+    return ans;
+}
+vector<int> mergeBST(TreeNode *root1, TreeNode *root2)
+{
+    vector<int>inorder1;
+    inorder(root1,inorder1);
+    vector<int>inorder2;
+    inorder(root2,inorder2);
+   vector<int>ans= merged(inorder1,inorder2);
+   return ans;
+
+}
 
 Approach:2 optimised S(c)=O(height)
 void BSTtoDLL(TreeNode *root,TreeNode *&head)
